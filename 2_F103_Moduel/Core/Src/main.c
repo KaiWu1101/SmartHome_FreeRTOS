@@ -21,6 +21,7 @@
 #include "main.h"
 #include "usart.h"
 #include "gpio.h"
+#include "driver_led.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -97,7 +98,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+     WaterLed();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
