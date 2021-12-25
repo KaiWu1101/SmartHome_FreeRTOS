@@ -1,0 +1,15 @@
+.\drivers_led.o: ..\..\ModuleDrivers\drivers_led.c
+.\drivers_led.o: ..\..\ModuleDrivers\drivers_led.h
+.\drivers_led.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\drivers_led.o: .\STM32F10xFWLib\inc\stm32f10x_lib.h
+.\drivers_led.o: .\STM32F10xFWLib\inc\stm32f10x_map.h
+.\drivers_led.o: ..\CORTEX_STM32F103_Keil\stm32f10x_conf.h
+.\drivers_led.o: .\STM32F10xFWLib\inc\stm32f10x_type.h
+.\drivers_led.o: .\STM32F10xFWLib\inc\cortexm3_macro.h
+.\drivers_led.o: .\STM32F10xFWLib\inc\stm32f10x_exti.h
+.\drivers_led.o: .\STM32F10xFWLib\inc\stm32f10x_gpio.h
+.\drivers_led.o: .\STM32F10xFWLib\inc\stm32f10x_nvic.h
+.\drivers_led.o: .\STM32F10xFWLib\inc\stm32f10x_rcc.h
+.\drivers_led.o: .\STM32F10xFWLib\inc\stm32f10x_spi.h
+.\drivers_led.o: .\STM32F10xFWLib\inc\stm32f10x_systick.h
+.\drivers_led.o: .\STM32F10xFWLib\inc\stm32f10x_usart.h
