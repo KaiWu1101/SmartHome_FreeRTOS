@@ -88,24 +88,24 @@ void I2C_NACK()
 
 void I2C_WriteByte(uint8_t data)
 {
-	uint8_t i=0;
-	while(i<8)
-	{
-		SCL_L;
-		I2C_Delay(100);
-		if(data & 0x8) //send MSB first
-		{
-			SDA_H;
-		} else {
-			SDA_L;
-
-		}
-		SCL_H;
-		I2C_Delay(100);
-		data <<= 1;
-	  i++;
-	}
-	I2C_GetAck();
+    uint8_t i = 0;
+    for(i=0; i<8; i++)
+    {
+        SCL_L;
+        I2C_Delay(100);
+        if(data & 0x80)
+        {
+            SDA_H;
+        }
+        else
+        {
+            SDA_L;
+        }
+        data <<= 1; // 发出1bit数据后，要更新数据，将data的次高位移位到最高位
+        SCL_H;
+        I2C_Delay(100);
+    }
+    I2C_GetAck();
 }
 
 uint8_t I2C_ReadByte(uint8_t ack)
