@@ -45,22 +45,22 @@ extern void OLED_SetPageAddr_HV(uint8_t start, uint8_t end);
 extern void OLED_SetDispStartLine(uint8_t line);
 extern void OLED_SetMuxRatio(uint8_t ratio);
 
-#define OLED_SEG_REMAP       OLED_WriteCmd(0xA1)
-#define OLED_SEG_NOREMAP     OLED_WriteCmd(0xA0)
-#define OLED_SCAN_NORMAL     OLED_WriteCmd(0xC0)
-#define OLED_SCAN_REMAP      OLED_WriteCmd(0xC8)
+#define OLED_SEG_REMAP()       OLED_WriteCmd(0xA1)
+#define OLED_SEG_NOREMAP()     OLED_WriteCmd(0xA0)
+#define OLED_SCAN_NORMAL()     OLED_WriteCmd(0xC0)
+#define OLED_SCAN_REMAP()      OLED_WriteCmd(0xC8)
 
 typedef enum {
 	COM_PIN_SEQ = 0,
 	COM_PIN_ALT = 1
-} COMP_PINS_MODE;
+} COM_PINS_MODE;
 
 typedef enum {
 	COM_NOREMAP = 0,
 	COM_REMAP   = 1
 } COM_REMAP_STATE;
 extern void OLED_SetDispOffset(uint8_t offset);
-extern void OLED_SetComConfig(COMP_PINS_MODE mode, COM_REMAP_STATE state);
+extern void OLED_SetComConfig(COM_PINS_MODE mode, COM_REMAP_STATE state);
 	
 
 /* 5.时间设置功能函数 */
@@ -86,14 +86,14 @@ extern void OLED_SetChargePump(CHARGE_PUMP_STATE state);
 
 /*control block*/
 extern void OLED_SetContrastValue(uint8_t value);
-#define ENTIRE_DISP_ON  OLED_WriteCmd(0xA5)
-#define ENTIRE_DISP_OFF OLED_WriteCmd(0xA4)
-#define DISP_NORMAL     OLED_WriteCmd(0xA6)
-#define DISP_INVERSE    OLED_WriteCmd(0xA7)
-#define DISP_ON         OLED_WriteCmd(0xAF)
-#define DISP_OFF        OLED_WriteCmd(0xAE)
-#define SCROLL_ON       OLED_WriteCmd(0x2F)
-#define SCROLL_OFF      OLED_WriteCmd(0x2E)
+#define ENTIRE_DISP_ON()  OLED_WriteCmd(0xA5)
+#define ENTIRE_DISP_OFF() OLED_WriteCmd(0xA4)
+#define DISP_NORMAL()     OLED_WriteCmd(0xA6)
+#define DISP_INVERSE()    OLED_WriteCmd(0xA7)
+#define DISP_ON()         OLED_WriteCmd(0xAF)
+#define DISP_OFF()        OLED_WriteCmd(0xAE)
+#define SCROLL_ON()       OLED_WriteCmd(0x2F)
+#define SCROLL_OFF()      OLED_WriteCmd(0x2E)
 
 
 #endif /*__DRIVER_OLED_H_ */

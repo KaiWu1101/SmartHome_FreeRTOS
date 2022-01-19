@@ -23,6 +23,7 @@
 #include "gpio.h"
 #include "driver_led.h"
 #include "driver_key.h"
+#include "driver_oled.h"
 
 
 /* Private includes ----------------------------------------------------------*/
