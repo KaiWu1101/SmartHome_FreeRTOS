@@ -98,7 +98,13 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	
 	OLED_Init();
+	OLED_Clear();
+	OLED_PutChar(0, 0, 'K');
+	OLED_PutChar(0, 16, 'K');
+  OLED_PrintString(2, 0, "Hello World");
+
   while (1)
   {
     /* USER CODE END WHILE */

@@ -95,5 +95,15 @@ extern void OLED_SetContrastValue(uint8_t value);
 #define SCROLL_ON()       OLED_WriteCmd(0x2F)
 #define SCROLL_OFF()      OLED_WriteCmd(0x2E)
 
+/* 7.初始化 */
+
+/************** 7. OLED初始化函数 **************/
+void OLED_Init(void);
+
+/************** 8. 基本驱动功能函数 **************/
+void OLED_SetPosition(uint8_t page, uint8_t col);
+void OLED_Clear(void);
+void OLED_PutChar(uint8_t page, uint8_t col, char c);
+void OLED_PrintString(uint8_t page, uint8_t col, char *str);
 
 #endif /*__DRIVER_OLED_H_ */

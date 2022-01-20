@@ -1,6 +1,7 @@
 #include "driver_oled.h"
 #include "driver_i2c.h"
-
+#include <string.h>
+#include "ascii_font.c"
 /*
  * When writing byte to OLED, control byte != data byte 
  *                            control byte != cmd byte
@@ -26,7 +27,6 @@ void OLED_WriteData(uint8_t data)
 {
 	I2C_Start();
 	I2C_WriteByte(OLED_WRITE_ADDR);
-	I2C_GetAck();
 	I2C_WriteByte(0x40); //CO = 0 D/C# = 0 (cmd)
 	I2C_WriteByte(data);
 	I2C_Stop();
@@ -37,7 +37,6 @@ void OLED_WriteNBytes(uint8_t data[], uint16_t len)
 	if(data == NULL) return; //void function can still return.
 	I2C_Start();
 	I2C_WriteByte(OLED_WRITE_ADDR);
-	I2C_GetAck();
 	I2C_WriteByte(0x40); //CO = 0 D/C# = 0 (cmd)
 	for(int i = 0; i < len; i++)
 	{
@@ -236,15 +235,24 @@ void OLED_SetPosition(uint8_t page, uint8_t col)
  *  输出参数：无
  *  返回值：无
 */
+static void OLED_ClearPage(uint8_t page_num)
+{
+	OLED_SetPosition(page_num, 0);
+	for(int i = 0; i <128; i++)
+	{
+		OLED_WriteData(0x0);
+	}
+}
 void OLED_Clear(void)
 {
     uint8_t i = 0;
     uint8_t buf[128] = {0};
+		memset(buf, 0, 128);
     
     for(i=0; i<8; i++)
     {
         OLED_SetPosition(i, 0);
-        OLED_WriteNBytes(&buf[0], 128);
+        OLED_ClearPage(i);
     }
 }
 
@@ -257,14 +265,14 @@ void OLED_Clear(void)
  *  输出参数：无
  *  返回值：无
 */
-//void OLED_PutChar(uint8_t page, uint8_t col, char c)
-//{
-//    OLED_SetPosition(page, col);
-//    OLED_WriteNBytes((uint8_t*)&ascii_font[c][0], 8);
-//    
-//    OLED_SetPosition(page + 1, col);
-//    OLED_WriteNBytes((uint8_t*)&ascii_font[c][8], 8);
-//}
+void OLED_PutChar(uint8_t page, uint8_t col, char c)
+{
+    OLED_SetPosition(page, col);
+    OLED_WriteNBytes((uint8_t*)&ascii_font[c][0], 8);
+    
+    OLED_SetPosition(page + 1, col);
+    OLED_WriteNBytes((uint8_t*)&ascii_font[c][8], 8);
+}
 
 /*
  *  函数名：OLED_PrintString
@@ -275,23 +283,23 @@ void OLED_Clear(void)
  *  输出参数：无
  *  返回值：无
 */
-//void OLED_PrintString(uint8_t page, uint8_t col, char *str)
-//{
-//    while(*str != 0)
-//    {
-//        OLED_PutChar(page, col, *str);
-//        col += 8;
-//        if(col > 127)
-//        {
-//            page += 2;
-//        }
-//        
-//        if(page > 7)
-//        {
-//            page = 0;
-//        }
-//        
-//        str++;
-//    }
-//}
+void OLED_PrintString(uint8_t page, uint8_t col, char *str)
+{
+    while(*str != 0)
+    {
+        OLED_PutChar(page, col, *str);
+        col += 8;
+        if(col > 127)
+        {
+            page += 2;
+        }
+        
+        if(page > 7)
+        {
+            page = 0;
+        }
+        
+        str++;
+    }
+}
 
