@@ -116,19 +116,13 @@ int main(void)
   ringbuffer_init(&test_rb);
   
   // 使能USART1的中断
-    EnableDebugIRQ();
-    printf("Hello World!\r\n");
+  EnableDebugIRQ();
+  printf("Hello World!\r\n");
 	
-	char c = 0;
-  while (1)
-  {
-    /* USER CODE END WHILE */
-    c = getchar();
-    if(c != 0)
-		{
-			printf("%c", c);
-			c=0;
-	  }
+	KEY_GPIO_ReInit();
+	while(1) {
+		if(KEY1_Value() == KEY_PRESSED) printf("key 1 pressed\n\r");
+		if(KEY2_Value() == KEY_PRESSED) printf("key 2 pressed\n\r");
 	}
 
   while(1)
