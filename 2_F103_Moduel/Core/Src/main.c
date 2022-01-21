@@ -18,12 +18,15 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include <string.h>
+#include <stdio.h>
 #include "main.h"
 #include "usart.h"
 #include "gpio.h"
 #include "driver_led.h"
 #include "driver_key.h"
 #include "driver_oled.h"
+#include "driver_usart.h"
 
 
 /* Private includes ----------------------------------------------------------*/
@@ -101,9 +104,20 @@ int main(void)
 	
 	OLED_Init();
 	OLED_Clear();
-	OLED_PutChar(0, 0, 'K');
-	OLED_PutChar(0, 16, 'K');
-  OLED_PrintString(2, 0, "Hello World");
+  //OLED_PrintString(0, 0, "I LOVE 0");
+	//OLED_PrintString(2, 0, "I LOVE 2");
+	//OLED_PrintString(4, 0, "I LOVE 4");
+	//OLED_PrintString(6, 0, "I LOVE 6");
+	
+	EnableDebugIRQ();
+	printf("Hello World\n\r");
+	
+	char c = 0;
+	while(1)
+	{
+		c = getchar();
+	  printf("%c ", c);
+	}
 
   while (1)
   {
