@@ -27,6 +27,7 @@
 #include "driver_key.h"
 #include "driver_oled.h"
 #include "driver_usart.h"
+#include "driver_ringbuffer.h"
 
 
 /* Private includes ----------------------------------------------------------*/
@@ -69,6 +70,9 @@ void SystemClock_Config(void);
   * @brief  The application entry point.
   * @retval int
   */
+	
+ring_buffer test_rb;
+
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -102,24 +106,32 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	
-	OLED_Init();
-	OLED_Clear();
+	//OLED_Init();
+	//OLED_Clear();
   //OLED_PrintString(0, 0, "I LOVE 0");
 	//OLED_PrintString(2, 0, "I LOVE 2");
 	//OLED_PrintString(4, 0, "I LOVE 4");
 	//OLED_PrintString(6, 0, "I LOVE 6");
 	
-	EnableDebugIRQ();
-	printf("Hello World\n\r");
+  ringbuffer_init(&test_rb);
+  
+  // 使能USART1的中断
+    EnableDebugIRQ();
+    printf("Hello World!\r\n");
 	
 	char c = 0;
-	while(1)
-	{
-		c = getchar();
-	  printf("%c ", c);
+  while (1)
+  {
+    /* USER CODE END WHILE */
+    c = getchar();
+    if(c != 0)
+		{
+			printf("%c", c);
+			c=0;
+	  }
 	}
 
-  while (1)
+  while(1)
   {
     /* USER CODE END WHILE */
 		if(!K1_Value()) BlueShine2();

@@ -1,6 +1,8 @@
 #include "driver_usart.h"
 #include "usart.h"
 #include <stdio.h>
+#include "driver_ringbuffer.h"
+#include "main.h"
 
 static volatile int txcplt_flag = 0;
 static volatile int rxcplt_flag = 0;
@@ -29,15 +31,22 @@ int fputc(int ch, FILE *f)
 int fgetc(FILE *f)
 {
 	char c = 0;
-	rxcplt_flag = 0;
-	HAL_UART_Receive_IT(&huart1, (uint8_t *)&c, 1);
-	while(rxcplt_flag == 0);
+	//rxcplt_flag = 0;
+	//HAL_UART_Receive_IT(&huart1, (uint8_t *)&c, 1);
+	//while(rxcplt_flag == 0);
+	while(ringbuffer_ReadDate((unsigned char*)&c, &test_rb) != 0);
 	return c;
 }
 
 
 void USART1_IRQHandler(void)
 {
+	  volatile unsigned char c =0;
+	  if((USART1->SR & (1 <<5)) != 0)
+		{
+			c = USART1->DR;
+		  ringbuffer_WriteDate(c, &test_rb);
+		}
     HAL_UART_IRQHandler(&huart1);   // HAL库中的UART统一中断服务函数，通过形参判断是要处理谁的中断
 }
 

@@ -31,17 +31,17 @@ bool is_rb_empty(ring_buffer* dst_rb)
 
 unsigned int ringbuffer_WriteDate(unsigned char c, ring_buffer* dst_rb)
 {
-    if(is_rb_full(dst_rb)) {printf("RB FULL\n"); return 1;}
+    if(is_rb_full(dst_rb)) {return 1;}
     dst_rb->buffer[dst_rb->pW] = c;
     dst_rb->pW = ((dst_rb->pW + 1)%BUFFER_SIZE);
 }
 
-unsigned char ringbuffer_ReadDate(ring_buffer* dst_rb)
+int ringbuffer_ReadDate(unsigned char *c, ring_buffer* dst_rb)
 {
-    if(is_rb_empty(dst_rb)) {printf("RB EMPTY\n"); return 1;}
-    unsigned c = dst_rb->buffer[dst_rb->pR];
+    if(is_rb_empty(dst_rb)) {return -1;}
+    (*c) = dst_rb->buffer[dst_rb->pR];
     dst_rb->pR = (dst_rb->pR + 1)%BUFFER_SIZE;
-    return c;
+		return 0;
 }
 
 unsigned int display_rb_data(ring_buffer* dst_rb)
